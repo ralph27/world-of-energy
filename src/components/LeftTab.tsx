@@ -5,8 +5,12 @@ import { BsTwitter, BsFacebook, BsLinkedin, BsInstagram } from "react-icons/bs";
 const LeftTab = ({ menuOpen }: { menuOpen: boolean }) => {
   return (
     <div
-      className={`flex overflow-hidden
-      bg-base-200 ${menuOpen ? "basis-80 pl-5" : "basis-0 pl-0"}
+      className={`flex overflow-hidden 
+      bg-base-200 ${
+        menuOpen
+          ? "absolute bottom-0 top-20 z-10 w-screen px-5 md:relative md:top-0 md:basis-1/3"
+          : "basis-0 pl-0"
+      }
       } pt-12 font-kanit text-xl transition-all duration-300`}
     >
       <div className="w-full">

@@ -8,7 +8,7 @@ const NewsTab = () => {
   console.log(data);
 
   return (
-    <div className="flex-1 pl-12 pt-8 font-kanit">
+    <div className="flex-1 pt-8 font-kanit">
       <div className="flex items-center justify-between">
         <h1 className="flex items-center gap-2 text-lg text-white">
           <BiNews size={25} /> Latest News
