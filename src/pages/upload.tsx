@@ -63,7 +63,7 @@ const Upload = () => {
 
   return (
     <div className="flex h-screen items-center justify-center">
-      <div className="card bg-base-100 shadow-xl">
+      <div className="card bg-base100 shadow-xl">
         <div className="card-body items-center">
           <div className="tabs tabs-boxed w-fit">
             <h1

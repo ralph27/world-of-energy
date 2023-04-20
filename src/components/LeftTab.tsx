@@ -6,7 +6,7 @@ const LeftTab = ({ menuOpen }: { menuOpen: boolean }) => {
   return (
     <div
       className={`flex overflow-hidden 
-      bg-base-200 ${
+      bg-base200 ${
         menuOpen
           ? "absolute bottom-0 top-20 z-10 w-screen px-5 md:relative md:top-0 md:basis-1/3"
           : "basis-0 pl-0"

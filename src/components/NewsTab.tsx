@@ -15,7 +15,7 @@ const NewsTab = () => {
         </h1>
         <SearchBar />
       </div>
-      <div className="mt-2 bg-base-200 ">
+      <div className="mt-2 bg-base200 ">
         {data &&
           data.map((article) => (
             <Article

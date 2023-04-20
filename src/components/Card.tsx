@@ -15,7 +15,7 @@ export default function Card({
   category: string;
 }) {
   return (
-    <div className="relative flex max-w-xs cursor-pointer flex-col rounded-xl bg-base-200 shadow-xl duration-500 ease-in-out lg:hover:scale-105">
+    <div className="relative flex max-w-xs cursor-pointer flex-col rounded-xl bg-base200 shadow-xl duration-500 ease-in-out lg:hover:scale-105">
       <div className="relative h-48 w-full">
         <Image src={image} fill alt={title} className="rounded-t-xl" />
       </div>

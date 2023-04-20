@@ -11,7 +11,7 @@ const Nav = ({
   const { data: sessionData } = useSession();
 
   return (
-    <nav className="navbar justify-between border-b border-white/50 bg-base-200 px-8 py-3">
+    <nav className="navbar justify-between border-b border-white/50 bg-base200 px-8 py-3">
       <div className="flex items-center gap-3">
         <BiMenu
           size={40}
