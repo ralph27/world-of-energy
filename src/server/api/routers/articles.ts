@@ -27,6 +27,14 @@ export const ArticlesRouter = createTRPCRouter({
       return res;
     }),
 
+  getPreview: publicProcedure.query(async ({ ctx }) => {
+    const res = await ctx.prisma.article.findMany({
+      take: 4,
+    });
+
+    return res;
+  }),
+
   getArticles: publicProcedure.query(async ({ ctx }) => {
     const res = await ctx.prisma.article.findMany({
       select: {

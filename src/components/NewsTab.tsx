@@ -5,7 +5,6 @@ import Article from "./Article";
 
 const NewsTab = () => {
   const { data } = api.articles.getArticles.useQuery();
-  console.log(data);
 
   return (
     <div className="flex-1 pt-8 font-kanit">

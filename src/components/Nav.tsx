@@ -1,4 +1,4 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { BiMenu } from "react-icons/bi";
 import Tag from "./Tag";
@@ -9,6 +9,7 @@ const Nav = ({
   setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { data: sessionData } = useSession();
+  console.log(sessionData);
 
   return (
     <nav className="navbar justify-between border-b border-white/50 bg-base200 px-8 py-3">

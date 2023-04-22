@@ -7,6 +7,7 @@ import { useState } from "react";
 import NewsTab from "~/components/NewsTab";
 import Hero from "~/components/Hero";
 import Card from "~/components/Card";
+import { api } from "~/utils/api";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -22,6 +23,10 @@ const kanit = Kanit({
 
 const Home: NextPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { data } = api.articles.getPreview.useQuery();
+  console.log(data);
+
   return (
     <>
       <Head>
