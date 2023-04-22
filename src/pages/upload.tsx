@@ -10,6 +10,11 @@ interface Article {
   categoryId: string;
 }
 
+interface Category {
+  name: string;
+  background: string;
+}
+
 const Upload = () => {
   const [option, setOption] = useState<string>("category");
   const [data, setData] = useState<Article>({
@@ -19,7 +24,10 @@ const Upload = () => {
       "https://res.cloudinary.com/dij6smhap/image/upload/v1680532681/cld-sample-5.jpg",
     categoryId: "",
   });
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<Category>({
+    name: "",
+    background: "",
+  });
   const router = useRouter();
 
   const user = useSession();
@@ -32,7 +40,10 @@ const Upload = () => {
 
   const addCategory = api.categories.addCategory.useMutation({
     onSuccess: () => {
-      setCategory("");
+      setCategory({
+        name: "",
+        background: "",
+      });
     },
   });
 
@@ -55,14 +66,19 @@ const Upload = () => {
 
   const handleSubmit = async () => {
     if (option === "category" && !!category) {
-      await addCategory.mutateAsync({ name: category });
+      if (category.name && category.background) {
+        await addCategory.mutateAsync({
+          name: category.name,
+          background: category.background,
+        });
+      }
     } else if (option === "article") {
       await addArticle.mutateAsync(data);
     }
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen items-center justify-center bg-base200">
       <div className="card bg-base100 shadow-xl">
         <div className="card-body items-center">
           <div className="tabs tabs-boxed w-fit">
@@ -88,10 +104,27 @@ const Upload = () => {
                 <span>Category</span>
                 <input
                   type="text"
-                  value={category}
+                  value={category.name}
                   className="input-bordered input"
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setCategory(e.currentTarget.value)
+                    setCategory({ ...category, name: e.currentTarget.value })
+                  }
+                />
+              </label>
+              <label className="label">
+                <span className="label-text">Enter Background in HEX</span>
+              </label>
+              <label className="input-group">
+                <span>Background</span>
+                <input
+                  type="text"
+                  value={category.background}
+                  className="input-bordered input"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setCategory({
+                      ...category,
+                      background: e.currentTarget.value,
+                    })
                   }
                 />
               </label>

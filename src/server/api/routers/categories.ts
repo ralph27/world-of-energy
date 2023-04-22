@@ -3,10 +3,10 @@ import { z } from "zod";
 
 export const CategoriesRouter = createTRPCRouter({
   addCategory: protectedProcedure
-    .input(z.object({ name: z.string() }))
+    .input(z.object({ name: z.string(), background: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const res = await ctx.prisma.category.create({
-        data: { name: input.name },
+        data: { name: input.name, background: input.background },
       });
       return res;
     }),
