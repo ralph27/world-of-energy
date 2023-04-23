@@ -11,7 +11,7 @@ const LeftTab = ({ menuOpen }: { menuOpen: boolean }) => {
           ? "absolute bottom-0 top-20 z-10 w-screen px-5 md:relative md:top-0 md:basis-1/3"
           : "basis-0 pl-0"
       }
-      } pt-12 font-kanit text-xl transition-all duration-300`}
+      pt-12 font-kanit text-xl transition-all duration-300`}
     >
       <div className="w-full">
         <ul className="flex flex-col gap-14 text-white">

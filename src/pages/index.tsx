@@ -1,10 +1,6 @@
-import { type NextPage } from "next";
 import Head from "next/head";
-import Nav from "~/components/Nav";
 import { Kanit, Roboto } from "next/font/google";
 import LeftTab from "~/components/LeftTab";
-import { useState } from "react";
-import NewsTab from "~/components/NewsTab";
 import Hero from "~/components/Hero";
 import Card from "~/components/Card";
 import { api } from "~/utils/api";
@@ -21,9 +17,7 @@ const kanit = Kanit({
   variable: "--kanit-font",
 });
 
-const Home: NextPage = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
+const Home = ({ menuOpen }: { menuOpen: boolean }) => {
   const { data } = api.articles.getPreview.useQuery();
   console.log(data);
 
@@ -35,7 +29,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${kanit.variable} ${roboto.variable} bg-base100`}>
-        <Nav setMenuOpen={setMenuOpen} />
         <div className="flex h-[calc(100vh-_82.67px)] overflow-hidden">
           <LeftTab menuOpen={menuOpen} />
           <div className="grid items-start overflow-y-scroll px-2 pt-10 sm:py-10">

@@ -10,7 +10,7 @@ export default function Category({
       style={{ backgroundColor: color }}
       className={`w-fit rounded-md px-2 py-0.5`}
     >
-      <p className="text-sm text-white">#{category}</p>
+      <p className="text-md text-white sm:text-lg">#{category}</p>
     </div>
   );
 }
