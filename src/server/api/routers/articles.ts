@@ -26,19 +26,25 @@ export const ArticlesRouter = createTRPCRouter({
             fileName: `${input.title} image`,
           })
           .then(async (response) => {
-            const res = await ctx.prisma.article.create({
-              data: {
-                content: input.content,
-                title: input.title,
-                image: response.url,
-                categories: {
-                  connect: {
-                    id: input.categoryId,
+            try {
+              const res = await ctx.prisma.article.create({
+                data: {
+                  content: input.content,
+                  title: input.title,
+                  image: response.url,
+                  categories: {
+                    connect: {
+                      id: input.categoryId,
+                    },
                   },
                 },
-              },
-            });
-            return res;
+              });
+              console.log(res);
+              return res;
+            } catch (e) {
+              console.log("ERROR", e);
+              return e;
+            }
           })
           .catch((e) => {
             console.log(e);
