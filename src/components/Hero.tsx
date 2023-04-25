@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -19,9 +20,12 @@ export default function Hero() {
           quickly scan and get the highlights of the day&apos;s events.
         </p>
         <div className="py-5" />
-        <button className="w-30 btn-primary btn h-14 lg:self-center">
+        <Link
+          href="#subscribe"
+          className="w-30 btn-primary btn h-14 lg:self-center"
+        >
           Subscribe
-        </button>
+        </Link>
       </div>
       <Image
         src={"/hero.png"}

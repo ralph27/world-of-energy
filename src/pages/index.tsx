@@ -4,6 +4,7 @@ import LeftTab from "~/components/LeftTab";
 import Hero from "~/components/Hero";
 import Card from "~/components/Card";
 import { api } from "~/utils/api";
+import FullSubscribe from "~/components/FullSubscribe";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -29,45 +30,31 @@ const Home = ({ menuOpen }: { menuOpen: boolean }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${kanit.variable} ${roboto.variable} bg-base100`}>
-        <div className="flex h-[calc(100vh-_82.67px)] overflow-hidden">
+        <div className="flex h-[calc(100vh-_82.67px)]">
           <LeftTab menuOpen={menuOpen} />
-          <div className="grid items-start overflow-y-scroll px-2 pt-10 sm:py-10">
+          <div className="grid items-start px-2 pt-10 sm:py-10">
             <Hero />
-            <div className="py-6 font-kanit">
+            <div className="py-16 font-kanit xl:py-40">
               <h1 className="bg-gradient-to-t from-[#5F0A87] to-[#A4508B] bg-clip-text text-center text-3xl font-bold text-transparent sm:text-4xl md:text-5xl">
                 LATEST SUMMARIES
               </h1>
 
               <div className="grid-list grid-template-columns-sm  md:grid-template-columns-md lg:grid-template-columns-lg   justify-items-center gap-16 p-6">
-                <Card
-                  category="science"
-                  description="How to configure a new Node.js project with TypeScript and ES Modules How to configure a new Node.js project with TypeScript and ES Modules "
-                  title="Setup Node with TypeScript"
-                  image="https://fireship.io/lessons/typescript-nodejs-setup/img/featured.webp"
-                  id="1"
-                />
-                <Card
-                  category="science"
-                  description="How to configure a new Node.js project with TypeScript and ES Modules"
-                  title="Setup Node with TypeScript"
-                  image="https://fireship.io/lessons/typescript-nodejs-setup/img/featured.webp"
-                  id="1"
-                />
-                <Card
-                  category="science"
-                  description="How to configure a new Node.js project with TypeScript and ES Modules"
-                  title="Setup Node with TypeScript"
-                  image="https://fireship.io/lessons/typescript-nodejs-setup/img/featured.webp"
-                  id="1"
-                />
-                <Card
-                  category="science"
-                  description="How to configure a new Node.js project with TypeScript and ES Modules"
-                  title="Setup Node with TypeScript"
-                  image="https://fireship.io/lessons/typescript-nodejs-setup/img/featured.webp"
-                  id="1"
-                />
+                {data?.map((article) => (
+                  <Card
+                    background={article.categories.background}
+                    category={article.categories.name}
+                    description="eoigwoig weoigwoiegb woeigweoigb wgoiegweoigb wgoibwegoiweb gowebg gwigbweubg gew"
+                    image={article.image}
+                    title={article.title}
+                    id={article.id}
+                    key={article.id}
+                  />
+                ))}
               </div>
+            </div>
+            <div id="subscribe" className="-mx-2">
+              <FullSubscribe />
             </div>
           </div>
 

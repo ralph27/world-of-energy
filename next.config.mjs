@@ -32,6 +32,10 @@ const config = {
         protocol: "https",
         hostname: "fireship.io",
       },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
+      },
     ],
   },
 };

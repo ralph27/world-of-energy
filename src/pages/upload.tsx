@@ -20,8 +20,7 @@ const Upload = () => {
   const [data, setData] = useState<Article>({
     title: "",
     content: "",
-    image:
-      "https://res.cloudinary.com/dij6smhap/image/upload/v1680532681/cld-sample-5.jpg",
+    image: "",
     categoryId: "",
   });
   const [category, setCategory] = useState<Category>({
@@ -49,14 +48,14 @@ const Upload = () => {
 
   const addArticle = api.articles.addArticle.useMutation({
     onSuccess: () => {
-      setData({
-        ...data,
-        categoryId: "",
-        content: "",
-        image:
-          "https://res.cloudinary.com/dij6smhap/image/upload/v1680532681/cld-sample-5.jpg",
-        title: "",
-      });
+      console.log("SUCCESS");
+      // setData({
+      //   ...data,
+      //   categoryId: "",
+      //   content: "",
+      //   image: "",
+      //   title: "",
+      // });
     },
   });
 
@@ -73,7 +72,25 @@ const Upload = () => {
         });
       }
     } else if (option === "article") {
-      await addArticle.mutateAsync(data);
+      await addArticle.mutateAsync({ ...data });
+    }
+  };
+
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const input = e.target as HTMLInputElement;
+
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+    const reader = new FileReader();
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        if (reader.result) {
+          console.log(reader.result.toString());
+          setData({ ...data, image: reader.result.toString() });
+        }
+      };
     }
   };
 
@@ -167,6 +184,7 @@ const Upload = () => {
               <input
                 type="file"
                 className="file-input-bordered file-input-accent file-input w-full max-w-xs"
+                onChange={(e) => handleImageUpload(e)}
               />
               <div className="py-2" />
               <textarea
