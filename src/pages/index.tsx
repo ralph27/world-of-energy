@@ -42,10 +42,9 @@ const Home = ({ menuOpen }: { menuOpen: boolean }) => {
               <div className="grid-list grid-template-columns-sm  md:grid-template-columns-md lg:grid-template-columns-lg   justify-items-center gap-16 p-6">
                 {data?.map((article) => (
                   <Card
-                    background={article.categories.background}
-                    category={article.categories.name}
+                    background={article.category.background}
+                    category={article.category.name}
                     description="eoigwoig weoigwoiegb woeigweoigb wgoiegweoigb wgoibwegoiweb gowebg gwigbweubg gew"
-                    image={article.image}
                     title={article.title}
                     id={article.id}
                     key={article.id}

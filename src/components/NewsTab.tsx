@@ -18,9 +18,8 @@ const NewsTab = () => {
         {data &&
           data.map((article) => (
             <Article
-              category={article.categories.name}
+              category={article.category.name}
               date={article.createdAt}
-              img={article.image}
               title={article.title}
               key={article.id}
             />
