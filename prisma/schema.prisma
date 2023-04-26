@@ -63,17 +63,17 @@ model Article {
   title      String
   content    String
   createdAt  DateTime @default(now())
-  image      String
   categoryId String
-  categories Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Summary {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  image     String
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  description String
+  createdAt   DateTime @default(now())
+  image       String
 }
 
 model Category {
