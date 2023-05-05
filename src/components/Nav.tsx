@@ -1,15 +1,14 @@
-import { signIn, useSession, signOut } from "next-auth/react";
-import Image from "next/image";
-import { BiMenu } from "react-icons/bi";
-import Tag from "./Tag";
+import { signIn, useSession, signOut } from 'next-auth/react';
+import Image from 'next/image';
+import { BiMenu } from 'react-icons/bi';
+import Tag from './Tag';
 
 const Nav = ({
-  setMenuOpen,
+  setMenuOpen
 }: {
   setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { data: sessionData } = useSession();
-  console.log(sessionData);
 
   return (
     <nav className="navbar justify-between border-b border-white/50 bg-base200 px-8 py-3">
@@ -32,7 +31,7 @@ const Nav = ({
       </div>
       <div
         className={`flex gap-3 rounded-lg ${
-          sessionData ? "border" : ""
+          sessionData ? 'border' : ''
         } border-neutral-content/30 px-1 py-1 font-kanit`}
       >
         {sessionData && (
@@ -40,7 +39,7 @@ const Nav = ({
             <Image
               width={35}
               height={35}
-              src={sessionData.user.image || ""}
+              src={sessionData.user.image || ''}
               alt="Profile Picture"
               className="h-fit rounded-full pt-1"
             />
@@ -55,7 +54,7 @@ const Nav = ({
           onClick={sessionData ? () => void signOut() : () => void signIn()}
           className="btn-primary btn-md btn"
         >
-          {sessionData ? "Log Out" : "Login"}
+          {sessionData ? 'Log Out' : 'Login'}
         </button>
       </div>
     </nav>

@@ -1,5 +1,5 @@
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { z } from "zod";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
+import { z } from 'zod';
 
 export const ArticlesRouter = createTRPCRouter({
   addArticle: protectedProcedure
@@ -7,7 +7,7 @@ export const ArticlesRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         content: z.string(),
-        categoryId: z.string(),
+        categoryId: z.string()
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -18,15 +18,14 @@ export const ArticlesRouter = createTRPCRouter({
             title: input.title,
             category: {
               connect: {
-                id: input.categoryId,
-              },
-            },
-          },
+                id: input.categoryId
+              }
+            }
+          }
         });
-        console.log(res);
         return res;
       } catch (e) {
-        console.log("ERROR", e);
+        return false;
       }
     }),
 
@@ -39,11 +38,11 @@ export const ArticlesRouter = createTRPCRouter({
         category: {
           select: {
             name: true,
-            background: true,
-          },
-        },
+            background: true
+          }
+        }
       },
-      take: 4,
+      take: 4
     });
 
     return res;
@@ -57,11 +56,11 @@ export const ArticlesRouter = createTRPCRouter({
         createdAt: true,
         category: {
           select: {
-            name: true,
-          },
-        },
-      },
+            name: true
+          }
+        }
+      }
     });
     return res;
-  }),
+  })
 });
