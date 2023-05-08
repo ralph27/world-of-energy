@@ -1,26 +1,25 @@
-import Head from "next/head";
-import { Kanit, Roboto } from "next/font/google";
-import LeftTab from "~/components/LeftTab";
-import Hero from "~/components/Hero";
-import Card from "~/components/Card";
-import { api } from "~/utils/api";
-import FullSubscribe from "~/components/FullSubscribe";
+import Head from 'next/head';
+import { Kanit, Roboto } from 'next/font/google';
+import LeftTab from '~/components/LeftTab';
+import Hero from '~/components/Hero';
+import Card from '~/components/Card';
+import { api } from '~/utils/api';
+import FullSubscribe from '~/components/FullSubscribe';
 
 const roboto = Roboto({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--roboto-font",
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--roboto-font'
 });
 
 const kanit = Kanit({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--kanit-font",
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--kanit-font'
 });
 
 const Home = ({ menuOpen }: { menuOpen: boolean }) => {
-  const { data } = api.articles.getPreview.useQuery();
-  console.log(data);
+  const { data } = api.summaries.getPreview.useQuery();
 
   return (
     <>
@@ -44,8 +43,9 @@ const Home = ({ menuOpen }: { menuOpen: boolean }) => {
                   <Card
                     background={article.category.background}
                     category={article.category.name}
-                    description="eoigwoig weoigwoiegb woeigweoigb wgoiegweoigb wgoibwegoiweb gowebg gwigbweubg gew"
+                    description={article.description}
                     title={article.title}
+                    image={article.image}
                     id={article.id}
                     key={article.id}
                   />

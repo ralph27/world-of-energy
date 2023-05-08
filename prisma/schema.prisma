@@ -74,6 +74,8 @@ model Summary {
   description String
   createdAt   DateTime @default(now())
   image       String
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
@@ -81,6 +83,7 @@ model Category {
   name       String
   background String    @default("#2775c3")
   articles   Article[]
+  Summary    Summary[]
 }
 
 enum Role {

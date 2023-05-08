@@ -19,10 +19,22 @@ interface Notification {
   status: 'SUCCESS' | 'FAILURE';
 }
 
+interface Summary {
+  title: string;
+  description: string;
+  categoryId: string;
+  image: string;
+  content: string;
+}
+
+interface Image {
+  url: string;
+}
+
 const Upload = () => {
   const [option, setOption] = useState<string>('category');
   const [notification, setNotification] = useState<Notification | null>(null);
-  const [categorySelected, setCategorySelected] = useState('');
+  const [imageSelected, setImageSelected] = useState('');
 
   const [data, setData] = useState<Article>({
     title: '',
@@ -33,6 +45,15 @@ const Upload = () => {
     name: '',
     background: ''
   });
+
+  const [summary, setSummary] = useState<Summary>({
+    title: '',
+    description: '',
+    categoryId: '',
+    image: '',
+    content: ''
+  });
+
   const router = useRouter();
 
   const user = useSession();
@@ -63,9 +84,45 @@ const Upload = () => {
     }
   });
 
+  const uploadImage = api.summaries.addPicture.useMutation();
+
+  const uploadSummary = api.summaries.addSummary.useMutation({
+    onSuccess: () => {
+      setSummary({
+        categoryId: '',
+        content: '',
+        description: '',
+        image: '',
+        title: ''
+      });
+    }
+  });
+
   const { data: categories } = api.categories.getCategories.useQuery(...[,], {
     enabled: option === 'article'
   });
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const reader = new FileReader();
+    const currentFile = e.target.files?.[0];
+
+    if (currentFile) {
+      reader.readAsDataURL(currentFile);
+    }
+
+    reader.onloadend = async () => {
+      const res = (await uploadImage.mutateAsync({
+        fileSelected: reader.result as string,
+        name: currentFile?.name || ''
+      })) as Image;
+
+      if (res && res.url) {
+        setImageSelected(res.url);
+      }
+    };
+  };
 
   const handleSubmit = async () => {
     if (option === 'category' && !!category) {
@@ -88,6 +145,22 @@ const Upload = () => {
       }
     } else if (option === 'article') {
       const res = await addArticle.mutateAsync(data);
+      res
+        ? setNotification({
+            ...notification,
+            status: 'SUCCESS',
+            title: 'SUCCESS'
+          })
+        : setNotification({
+            ...notification,
+            status: 'FAILURE',
+            title: 'FAILED'
+          });
+    } else if (option === 'summary') {
+      const res = await uploadSummary.mutateAsync({
+        ...summary,
+        image: imageSelected
+      });
       res
         ? setNotification({
             ...notification,
@@ -139,8 +212,14 @@ const Upload = () => {
             >
               Add Article
             </h1>
+            <h1
+              onClick={() => setOption('summary')}
+              className={`tab ${option === 'summary' ? 'tab-active' : ''}`}
+            >
+              Add Summary
+            </h1>
           </div>
-          {option === 'category' ? (
+          {option === 'category' && (
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Enter Category</span>
@@ -177,7 +256,8 @@ const Upload = () => {
                 />
               </label>
             </div>
-          ) : (
+          )}
+          {option === 'article' && (
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Enter Title</span>
@@ -226,6 +306,83 @@ const Upload = () => {
                 onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
                   setData({
                     ...data,
+                    content: event.currentTarget.value
+                  })
+                }
+              ></textarea>
+            </div>
+          )}
+          {option === 'summary' && (
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Enter Title</span>
+              </label>
+              <label className="input-group">
+                <span>Title</span>
+                <input
+                  type="text"
+                  value={summary?.title}
+                  placeholder="Science"
+                  className="input-bordered input"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setSummary({
+                      ...summary,
+                      title: e.currentTarget.value
+                    })
+                  }
+                />
+              </label>
+              <div className="py-2" />
+              <select
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                  setSummary({
+                    ...summary,
+                    categoryId: e.target.value
+                  })
+                }
+                value={summary.categoryId}
+                className="select-accent select w-full max-w-xs"
+              >
+                <option disabled selected value={''}>
+                  Categories
+                </option>
+                {categories?.map((name) => (
+                  <option value={name.id} key={name.id}>
+                    {name.name}
+                  </option>
+                ))}
+              </select>
+
+              <div className="py-2" />
+
+              <input
+                type="file"
+                className="file-input-bordered file-input w-full max-w-xs"
+                onChange={handleImageUpload}
+              />
+
+              <div className="py-2" />
+
+              <textarea
+                className="textarea-accent textarea"
+                placeholder="Description"
+                value={summary.description}
+                onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                  setSummary({
+                    ...summary,
+                    description: event.currentTarget.value
+                  })
+                }
+              ></textarea>
+
+              <div className="py-2" />
+              <textarea
+                className="textarea-accent textarea"
+                placeholder="Content"
+                value={summary.content}
+                onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                  setSummary({
+                    ...summary,
                     content: event.currentTarget.value
                   })
                 }
