@@ -59,7 +59,7 @@ const Upload = () => {
   const user = useSession();
 
   useEffect(() => {
-    if (!user || user.data?.user?.role === 'USER') {
+    if (user.status === 'unauthenticated' || user.data?.user?.role === 'USER') {
       void router.push('/');
     }
   }, [user, router]);
@@ -179,229 +179,230 @@ const Upload = () => {
     }, 2000);
     return () => clearTimeout(timer);
   };
-
-  return (
-    <div className="flex h-screen items-center justify-center bg-base200">
-      {notification && (
-        <div className="toast top-20">
-          <div
-            className={`alert ${
-              notification.status === 'FAILURE'
-                ? 'alert-error'
-                : 'alert-success'
-            }`}
-          >
-            <div>
-              <span>{notification?.title}</span>
+  if (user.data?.user.role === 'ADMIN') {
+    return (
+      <div className="flex h-screen items-center justify-center bg-base200">
+        {notification && (
+          <div className="toast top-20">
+            <div
+              className={`alert ${
+                notification.status === 'FAILURE'
+                  ? 'alert-error'
+                  : 'alert-success'
+              }`}
+            >
+              <div>
+                <span>{notification?.title}</span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      <div className="card bg-base100 shadow-xl">
-        <div className="card-body items-center">
-          <div className="tabs tabs-boxed w-fit">
-            <h1
-              onClick={() => setOption('category')}
-              className={`tab ${option === 'category' ? 'tab-active' : ''}`}
-            >
-              Add Category
-            </h1>
-            <h1
-              onClick={() => setOption('article')}
-              className={`tab ${option === 'article' ? 'tab-active' : ''}`}
-            >
-              Add Article
-            </h1>
-            <h1
-              onClick={() => setOption('summary')}
-              className={`tab ${option === 'summary' ? 'tab-active' : ''}`}
-            >
-              Add Summary
-            </h1>
-          </div>
-          {option === 'category' && (
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Enter Category</span>
-              </label>
-              <label className="input-group">
-                <span>Category</span>
-                <input
-                  type="text"
-                  value={category.name}
-                  className="input-bordered input"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setCategory({
-                      ...category,
-                      name: e.currentTarget.value
-                    })
-                  }
-                />
-              </label>
-              <label className="label">
-                <span className="label-text">Enter Background in HEX</span>
-              </label>
-              <label className="input-group">
-                <span>Background</span>
-                <input
-                  type="text"
-                  value={category.background}
-                  className="input-bordered input"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setCategory({
-                      ...category,
-                      background: e.currentTarget.value
-                    })
-                  }
-                />
-              </label>
+        )}
+        <div className="card bg-base100 shadow-xl">
+          <div className="card-body items-center">
+            <div className="tabs tabs-boxed w-fit">
+              <h1
+                onClick={() => setOption('category')}
+                className={`tab ${option === 'category' ? 'tab-active' : ''}`}
+              >
+                Add Category
+              </h1>
+              <h1
+                onClick={() => setOption('article')}
+                className={`tab ${option === 'article' ? 'tab-active' : ''}`}
+              >
+                Add Article
+              </h1>
+              <h1
+                onClick={() => setOption('summary')}
+                className={`tab ${option === 'summary' ? 'tab-active' : ''}`}
+              >
+                Add Summary
+              </h1>
             </div>
-          )}
-          {option === 'article' && (
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Enter Title</span>
-              </label>
-              <label className="input-group">
-                <span>Title</span>
-                <input
-                  type="text"
-                  value={data?.title}
-                  placeholder="Science"
-                  className="input-bordered input"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            {option === 'category' && (
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Enter Category</span>
+                </label>
+                <label className="input-group">
+                  <span>Category</span>
+                  <input
+                    type="text"
+                    value={category.name}
+                    className="input-bordered input"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setCategory({
+                        ...category,
+                        name: e.currentTarget.value
+                      })
+                    }
+                  />
+                </label>
+                <label className="label">
+                  <span className="label-text">Enter Background in HEX</span>
+                </label>
+                <label className="input-group">
+                  <span>Background</span>
+                  <input
+                    type="text"
+                    value={category.background}
+                    className="input-bordered input"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setCategory({
+                        ...category,
+                        background: e.currentTarget.value
+                      })
+                    }
+                  />
+                </label>
+              </div>
+            )}
+            {option === 'article' && (
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Enter Title</span>
+                </label>
+                <label className="input-group">
+                  <span>Title</span>
+                  <input
+                    type="text"
+                    value={data?.title}
+                    placeholder="Science"
+                    className="input-bordered input"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setData({
+                        ...data,
+                        title: e.currentTarget.value
+                      })
+                    }
+                  />
+                </label>
+                <div className="py-2" />
+                <select
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                     setData({
                       ...data,
-                      title: e.currentTarget.value
+                      categoryId: e.target.value
                     })
                   }
-                />
-              </label>
-              <div className="py-2" />
-              <select
-                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                  setData({
-                    ...data,
-                    categoryId: e.target.value
-                  })
-                }
-                value={data.categoryId}
-                className="select-accent select w-full max-w-xs"
-              >
-                <option disabled selected value={''}>
-                  Categories
-                </option>
-                {categories?.map((name) => (
-                  <option value={name.id} key={name.id}>
-                    {name.name}
+                  value={data.categoryId}
+                  className="select-accent select w-full max-w-xs"
+                >
+                  <option disabled selected value={''}>
+                    Categories
                   </option>
-                ))}
-              </select>
+                  {categories?.map((name) => (
+                    <option value={name.id} key={name.id}>
+                      {name.name}
+                    </option>
+                  ))}
+                </select>
 
-              <div className="py-2" />
-              <textarea
-                className="textarea-accent textarea"
-                placeholder="Content"
-                value={data.content}
-                onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-                  setData({
-                    ...data,
-                    content: event.currentTarget.value
-                  })
-                }
-              ></textarea>
-            </div>
-          )}
-          {option === 'summary' && (
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Enter Title</span>
-              </label>
-              <label className="input-group">
-                <span>Title</span>
-                <input
-                  type="text"
-                  value={summary?.title}
-                  placeholder="Science"
-                  className="input-bordered input"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                <div className="py-2" />
+                <textarea
+                  className="textarea-accent textarea"
+                  placeholder="Content"
+                  value={data.content}
+                  onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                    setData({
+                      ...data,
+                      content: event.currentTarget.value
+                    })
+                  }
+                ></textarea>
+              </div>
+            )}
+            {option === 'summary' && (
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Enter Title</span>
+                </label>
+                <label className="input-group">
+                  <span>Title</span>
+                  <input
+                    type="text"
+                    value={summary?.title}
+                    placeholder="Science"
+                    className="input-bordered input"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setSummary({
+                        ...summary,
+                        title: e.currentTarget.value
+                      })
+                    }
+                  />
+                </label>
+                <div className="py-2" />
+                <select
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                     setSummary({
                       ...summary,
-                      title: e.currentTarget.value
+                      categoryId: e.target.value
                     })
                   }
-                />
-              </label>
-              <div className="py-2" />
-              <select
-                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                  setSummary({
-                    ...summary,
-                    categoryId: e.target.value
-                  })
-                }
-                value={summary.categoryId}
-                className="select-accent select w-full max-w-xs"
-              >
-                <option disabled selected value={''}>
-                  Categories
-                </option>
-                {categories?.map((name) => (
-                  <option value={name.id} key={name.id}>
-                    {name.name}
+                  value={summary.categoryId}
+                  className="select-accent select w-full max-w-xs"
+                >
+                  <option disabled selected value={''}>
+                    Categories
                   </option>
-                ))}
-              </select>
+                  {categories?.map((name) => (
+                    <option value={name.id} key={name.id}>
+                      {name.name}
+                    </option>
+                  ))}
+                </select>
 
-              <div className="py-2" />
+                <div className="py-2" />
 
-              <input
-                type="file"
-                className="file-input-bordered file-input w-full max-w-xs"
-                onChange={handleImageUpload}
-              />
+                <input
+                  type="file"
+                  className="file-input-bordered file-input w-full max-w-xs"
+                  onChange={handleImageUpload}
+                />
 
-              <div className="py-2" />
+                <div className="py-2" />
 
-              <textarea
-                className="textarea-accent textarea"
-                placeholder="Description"
-                value={summary.description}
-                onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-                  setSummary({
-                    ...summary,
-                    description: event.currentTarget.value
-                  })
-                }
-              ></textarea>
+                <textarea
+                  className="textarea-accent textarea"
+                  placeholder="Description"
+                  value={summary.description}
+                  onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                    setSummary({
+                      ...summary,
+                      description: event.currentTarget.value
+                    })
+                  }
+                ></textarea>
 
-              <div className="py-2" />
-              <textarea
-                className="textarea-accent textarea"
-                placeholder="Content"
-                value={summary.content}
-                onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-                  setSummary({
-                    ...summary,
-                    content: event.currentTarget.value
-                  })
-                }
-              ></textarea>
+                <div className="py-2" />
+                <textarea
+                  className="textarea-accent textarea"
+                  placeholder="Content"
+                  value={summary.content}
+                  onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                    setSummary({
+                      ...summary,
+                      content: event.currentTarget.value
+                    })
+                  }
+                ></textarea>
+              </div>
+            )}
+            <div className="py-2" />
+            <div className="card-actions justify-end">
+              <button
+                onClick={() => void handleSubmit()}
+                className="btn-primary btn"
+              >
+                Submit
+              </button>
             </div>
-          )}
-          <div className="py-2" />
-          <div className="card-actions justify-end">
-            <button
-              onClick={() => void handleSubmit()}
-              className="btn-primary btn"
-            >
-              Submit
-            </button>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Upload;
