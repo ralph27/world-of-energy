@@ -33,12 +33,12 @@ const Home = ({ menuOpen }: { menuOpen: boolean }) => {
           <LeftTab menuOpen={menuOpen} />
           <div className="grid items-start px-2 pt-10 sm:py-10">
             <Hero />
-            <div className="py-16 bg-base100 font-kanit xl:py-40">
+            <div className="bg-base100 py-16 font-kanit xl:py-40">
               <h1 className="bg-gradient-to-t from-[#5F0A87] to-[#A4508B] bg-clip-text text-center text-3xl font-bold text-transparent sm:text-4xl md:text-5xl">
                 LATEST SUMMARIES
               </h1>
 
-              <div className="grid-list grid-template-columns-sm  md:grid-template-columns-md lg:grid-template-columns-lg   justify-items-center gap-16 p-6">
+              <div className="grid-list grid-template-columns-sm  md:grid-template-columns-md lg:grid-template-columns-lg justify-items-center gap-16 bg-base100 p-6">
                 {data?.map((article) => (
                   <Card
                     background={article.category.background}
@@ -56,8 +56,6 @@ const Home = ({ menuOpen }: { menuOpen: boolean }) => {
               <FullSubscribe />
             </div>
           </div>
-
-          {/* <NewsTab /> */}
         </div>
       </main>
     </>
