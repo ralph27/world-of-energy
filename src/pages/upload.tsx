@@ -59,7 +59,7 @@ const Upload = () => {
   const user = useSession();
 
   useEffect(() => {
-    if (user.data?.user?.role === 'USER') {
+    if (!user || user.data?.user?.role === 'USER') {
       void router.push('/');
     }
   }, [user, router]);
