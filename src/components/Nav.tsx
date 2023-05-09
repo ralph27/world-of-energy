@@ -2,6 +2,7 @@ import { signIn, useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import { BiMenu } from 'react-icons/bi';
 import Tag from './Tag';
+import Link from 'next/link';
 
 const Nav = ({
   setMenuOpen
@@ -18,16 +19,19 @@ const Nav = ({
           className="cursor-pointer text-white"
           onClick={() => setMenuOpen((prev) => !prev)}
         />
-        <Image
-          width={50}
-          height={10}
-          src="/logo.jpg"
-          alt="World of Energy Logo"
-          className=" hidden select-none rounded-full sm:block"
-        />
-        <h1 className="hidden select-none font-kanit text-xl text-white sm:block">
-          World of Energy
-        </h1>
+        <Link href={'/'} className="flex items-center gap-3">
+          <Image
+            width={50}
+            height={10}
+            src="/logo.jpg"
+            alt="World of Energy Logo"
+            className=" hidden select-none rounded-full sm:block"
+          />
+
+          <h1 className="hidden select-none font-kanit text-xl text-white sm:block">
+            World of Energy
+          </h1>
+        </Link>
       </div>
       <div
         className={`flex gap-3 rounded-lg ${
