@@ -32,7 +32,7 @@ export default function Page({ menuOpen }: { menuOpen: boolean }) {
   return (
     <div className={`flex ${kanit.variable} ${roboto.variable} pb-10 bg-base200`}>
       <LeftTab menuOpen={menuOpen} />
-      <div className="mx-auto my-0 w-full pt-5 lg:w-3/4 max-w-7xl">
+      <div className="mx-auto my-0 w-full pt-5 max-w-6xl">
         <div className='px-3 sm:px-10'>
           <div className="font-kanit">
             <Category
@@ -43,7 +43,7 @@ export default function Page({ menuOpen }: { menuOpen: boolean }) {
               {summary.data?.title}
             </h1>
           </div>
-          <div className="relative my-6 sm:px-10 h-64 w-full sm:h-80 md:h-96 lg:mx-auto lg:my-10 lg:h-100">
+          <div className="relative my-6 sm:px-10 h-64 w-full sm:h-80 md:h-96 lg:mx-auto lg:my-10 lg:h-[500px]">
             <Image src={summary.data?.image || ''} fill alt="picture" className='rounded-lg' />
           </div>
         </div>
